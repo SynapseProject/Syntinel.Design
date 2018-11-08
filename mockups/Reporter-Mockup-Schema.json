@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "Name": { "type": "string" },
+    "Description": { "type": "string" },
+    "Id": { "type": "string" },
+    "AllowMultiple": { "type": "boolean" },
+    "Options": {
+      "type": "array",
+      "items": {
+          "type": "object",
+          "properties": {
+            "Id": { "type": "integer" },
+            "Name": { "type": "string" },
+            "Description": { "type": "string" },
+            "Resolver": {
+              "type": "object",
+              "properties": {
+                "Type": { "type": "string" },
+                "Action": { "type": "string" },
+                "Config": {
+                  "type": "object"
+                }
+              },
+              "required": [
+                "Type"
+              ]
+            }
+          },
+          "required": [
+            "Id",
+            "Name",
+            "Description",
+            "Resolver"
+          ]
+        }
+    },
+    "DefaultAction": {
+      "type": "integer"
+    },
+    "DefaultActionTimeout": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "Name",
+    "Description",
+    "Id",
+    "Options"
+  ]
+}

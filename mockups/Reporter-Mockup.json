@@ -2,7 +2,7 @@
    "Name": "CPU Monitor",
    "Description": "Your EC2 Instance Is Running Hot (CPU > 80% over an hour)",
    "Id": "i-06a81abcd8caa4843",
-   "AllowMultiple": "false",
+   "AllowMultiple": false,
    "Options": [
       {
          "Id": 1,
