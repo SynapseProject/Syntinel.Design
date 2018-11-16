@@ -1,0 +1,113 @@
+---
+swagger: "2.0"
+info:
+  version: "2018-11-14T23:13:21Z"
+  title: "syntinel"
+host: "iveplpzxtk.execute-api.us-east-1.amazonaws.com"
+basePath: "/syntinel-poc"
+schemes:
+- "https"
+paths:
+  /cue:
+    post:
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "text/html"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Content-Type:
+              type: "string"
+  /notify:
+    post:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "SyntinelNotification"
+        required: true
+        schema:
+          $ref: "#/definitions/SyntinelNotification"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+definitions:
+  Empty:
+    type: "object"
+    title: "Empty Schema"
+  SyntinelNotification:
+    type: "object"
+    required:
+    - "Cues"
+    - "Description"
+    - "Name"
+    - "Signal"
+    properties:
+      Name:
+        type: "string"
+      Description:
+        type: "string"
+      AllowMultiple:
+        type: "boolean"
+      Signal:
+        type: "object"
+        properties:
+          ReporterId:
+            type: "integer"
+          Type:
+            type: "string"
+          Group:
+            type: "string"
+          Id:
+            type: "string"
+      Cues:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            Id:
+              type: "integer"
+            Name:
+              type: "string"
+            Description:
+              type: "string"
+            Resolver:
+              type: "object"
+              properties:
+                Type:
+                  type: "string"
+                Action:
+                  type: "string"
+                Variables:
+                  type: "array"
+                  items:
+                    type: "object"
+                    properties:
+                      Name:
+                        type: "string"
+                      Type:
+                        type: "string"
+                      DefaultValue:
+                        type: "string"
+                      Options:
+                        type: "array"
+                    required:
+                    - "Name"
+                    - "Type"
+              required:
+              - "Type"
+          required:
+          - "Description"
+          - "Id"
+          - "Name"
+          - "Resolver"
+      DefaultCue:
+        type: "integer"
+      DefaultCueTimeout:
+        type: "integer"
