@@ -1,0 +1,9 @@
+{
+	"_id": "0813785c-35d7-4579-ac89-5f09b7be78f2",
+	"_cue": 1,
+	"_responder": "wagug0",
+	"variables": [
+		{ "name": "instanceId", "values": [ "i-06a81abcd8caa4843" ] },
+		{ "name": "duration", "values": [ -1 ] }
+	]
+}

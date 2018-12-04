@@ -17,10 +17,11 @@
             "Type": "Lambda",
             "Action": "ResizeEC2",
             "Variables" : [
-               { "Name": "Size", "Type": "List", "Options": [ "t2.nano", "t2.micro", "t2.small" ], "DefaultValue": "t2.nano" },
+               { "Name": "Size", "Type": "List", "Options": [ "t2.nano", "t2.micro", "t2.small" ], "DefaultValue": "t2.nano", "AllowMultiple": true },
                { "Name": "Restart", "Type": "Boolean", "DefaultValue": "true" },
                { "Name": "Comment", "Type": "String", "DefaultValue": "When they go low, we go lower." },
-               { "Name": "InstanceId", "Type": "Hidden", "DefaultValue": "i-06a81abcd8caa4843" }
+               { "Name": "InstanceId", "Type": "Hidden", "DefaultValue": "i-06a81abcd8caa4843" },
+               { "Name": "ExecuteTime", "Type": "DateTime", "DefaultValue": "11/30/2018 23:59:59"}
             ]
         }
       },
