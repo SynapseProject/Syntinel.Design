@@ -21,7 +21,7 @@
           "type": "object",
           "required": [ "Id", "Name", "Description", "Resolver" ],
           "properties": {
-            "Id": { "type": "integer" },
+            "Id": { "type": "string" },
             "Name": { "type": "string" },
             "Description": { "type": "string" },
             "Resolver": {
