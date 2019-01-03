@@ -1,57 +1,42 @@
 {
-   "Name": "CPU Monitor",
-   "Description": "Your EC2 Instance Is Running Hot (CPU > 80% over an hour)",
-   "AllowMultiple": false,
-   "Signal": {
-      "ReporterId": 1,
-      "Type": "HighCpu",
-      "Group": "WU2-P1-0317",
-      "Id": "i-06a81abcd8caa4843"
+   "name": "Utilization",
+   "description": "EC2 Utilization Montior",
+   "allowMultiple": false,
+   "signal": {
+       "reporterId": 1,
+       "type": "HighCpu",
+       "group": "WU2-P1-0317",
+       "id": "i-06a81abcd8caa4843"
    },
-   "Cues": [
-      {
-         "Id": 1,
-         "Name": "Resize",
-         "Description": "Resize your EC2 instance to the next biggest size in the same class.",
-         "Resolver": {
-            "Type": "Lambda",
-            "Action": "ResizeEC2",
-            "Variables" : [
-               { "Name": "Size", "Type": "List", "Options": [ "t2.nano", "t2.micro", "t2.small" ], "DefaultValue": "t2.nano", "AllowMultiple": true },
-               { "Name": "Restart", "Type": "Boolean", "DefaultValue": "true" },
-               { "Name": "Comment", "Type": "String", "DefaultValue": "When they go low, we go lower." },
-               { "Name": "InstanceId", "Type": "Hidden", "DefaultValue": "i-06a81abcd8caa4843" },
-               { "Name": "ExecuteTime", "Type": "DateTime", "DefaultValue": "11/30/2018 23:59:59"}
-            ]
-        }
-      },
-      {
-         "Id": 2,
-         "Name": "Ignore",
-         "Description": "Ignore the alert.",
-         "Resolver": {
-            "Type": "Url",
-            "Action": "http://somerestcall.bp.com/snoozealert.php",
-            "Variables" : [
-               { "Name": "Duration", "Type": "Number", "DefaultValue": "7" },
-               { "Name": "InstanceId", "Type": "Hidden", "DefaultValue": "i-06a81abcd8caa4843" }
-            ]
-        }
-      },
-      {
-         "Id": 3,
-         "Name": "Disable",
-         "Description": "Disable CPU Monitoring For This Instance",
-         "Resolver": {
-            "Type": "Url",
-            "Action": "http://somerestcall.bp.com/snoozealert.php",
-            "Variables" : [
-               { "Name": "Duration", "Type": "Hidden", "DefaultValue": "-1" },
-               { "Name": "InstanceId", "Type": "Hidden", "DefaultValue": "i-06a81abcd8caa4843" }
-            ]
-         }
-      }
+   "cues": [
+       {
+           "id": "resize",
+           "name": "EC2 Resize",
+           "description": "WU2P103170042 (t2.large) is 43% utilizied for the past 7 days.  Would you like to resize it?",
+           "resolver": {
+               "type": "Lambda",
+               "action": "MyTestResolver",
+               "variables": [
+                   {
+                       "name": "size",
+                       "type": "list",
+                       "options": [
+                           "t2.nano",
+                           "t2.micro",
+                           "t2.medium",
+                           "Ignore"
+                       ],
+                       "defaultValue": "t2.nano"
+                   },
+                   {
+                      "name": "instanceid",
+                      "type": "hidden",
+                      "defaultValue": "i-06a81abcd8caa4843"
+                   }
+               ]
+           }
+       }
    ],
-   "DefaultCue": 1,
-   "DefaultCueTimeout": 4320
+   "defaultCue": "resize",
+   "defaultCueTimeout": 4320
 }

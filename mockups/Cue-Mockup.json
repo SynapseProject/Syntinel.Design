@@ -1,9 +1,18 @@
 {
-	"_id": "0813785c-35d7-4579-ac89-5f09b7be78f2",
-	"_cue": 1,
-	"_responder": "wagug0",
+	"id": "ABCDEFGH",
+	"cue": "resize",
 	"variables": [
-		{ "name": "instanceId", "values": [ "i-06a81abcd8caa4843" ] },
-		{ "name": "duration", "values": [ -1 ] }
+	  {
+		"name": "size",
+		"values": [
+		  "t2.micro"
+		]
+	  },
+	  {
+		"name": "instanceid",
+		"values": [
+		  "i-06a81abcd8caa4843"
+		]
+	  }
 	]
-}
+  }

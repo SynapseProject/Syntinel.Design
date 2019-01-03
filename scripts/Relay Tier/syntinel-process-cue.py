@@ -3,6 +3,7 @@ from urllib import parse
 import json
 import boto3
 import time
+import uuid
 
 def lambda_handler(event, context):
     
@@ -32,30 +33,41 @@ def lambda_handler(event, context):
     cue = event.get('_cue')
     variables = event.get('variables')
     ts = str(time.time())
+    actionId = str(uuid.uuid4())
     
     event.pop("_id")
-    event.update({ "_ts": ts })
-    
+    event.update({ "_ts": ts, "_status": "New" })
+
     # Update Signal Record in DynamoDB
     db = boto3.resource('dynamodb', region_name='us-east-1')
-    table = db.Table('Syntinel')
+    table = db.Table('syntinel-signals')
     record = table.get_item(Key={'_id': id})
     item = record.get('Item')
     
     if item:
-        cues = item.get('Cues')
-        if cues :
-            cues.append(event)
+        dbAction = { actionId: event }
+        actions = item.get('Actions')
+        if actions :
+            actions.update(dbAction)
         else :
-            cues = [ event ] 
+            actions = dbAction  
         
-        updateInfo = { '_status': 'Received', 'Cues': cues }
+        updateInfo = { '_status': 'Received', 'Actions': actions }
         item.update(updateInfo)
         table.put_item(Item=item)
+        
+        #TODO : Call Resolver From Signal Message
         
         # Mock Call To "Resolver Lambda"
         lam = boto3.client('lambda')
         lam.invoke(FunctionName='MyTestResolver', InvocationType='RequestResponse', Payload=json.dumps(event))
+
+        # Update Action Status To "Sent"
+        action = item.get('Actions').get(actionId)
+        action.update( {'_status': 'Sent' } )
+        table.put_item(Item=item)
+        
+        print('>> ', action)
 
     else :
         raise ValueError('Signal [' + id + '] Not Found.')
@@ -63,6 +75,7 @@ def lambda_handler(event, context):
     reply = {
         'statusCode': 200,
         'id': id,
+        'actionId': actionId,
         'ts': ts
     }
     

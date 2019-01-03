@@ -1,60 +1,54 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
-  "required": [ "Name", "Description", "Signal", "Cues" ],
-  "properties": {
-    "Name": { "type": "string" },
-    "Description": { "type": "string" },
-    "AllowMultiple": { "type": "boolean" },
-    "Signal": { 
-      "type": "object",
-      "properties": {
-        "ReporterId": { "type": "integer" },
-        "Type": { "type": "string" },
-        "Group": { "type": "string" },
-        "Id": { "type": "string" }
-      }
-    },
-    "Cues": {
-      "type": "array",
-      "items": {
-          "type": "object",
-          "required": [ "Id", "Name", "Description", "Resolver" ],
-          "properties": {
-            "Id": { "type": "string" },
-            "Name": { "type": "string" },
-            "Description": { "type": "string" },
-            "Resolver": {
-              "type": "object",
-              "properties": {
-                "Type": { "type": "string" },
-                "Action": { "type": "string" },
-                "Variables": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "Name": { "type": "string" },
-                      "Type": { "type": "string" },
-                      "DefaultValue": { "type": "string" },
-                      "Options": { "type": "array" }
-                    },
-                    "required": ["Name", "Type"]
-                  }
-                }
-              },
-              "required": [
-                "Type"
-              ]
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "required": [ "name", "description", "signal", "cues" ],
+    "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "allowMultiple": { "type": "boolean" },
+        "signal": { 
+            "type": "object",
+            "properties": {
+                "reporterId": { "type": "integer" },
+                "type": { "type": "string" },
+                "group": { "type": "string" },
+                "id": { "type": "string" }
             }
-          }
-        }
-    },
-    "DefaultCue": {
-      "type": "integer"
-    },
-    "DefaultCueTimeout": {
-      "type": "integer"
+        },
+        "cues": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [ "id", "name", "description", "resolver" ],
+                "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string" },
+                    "description": { "type": "string" },
+                    "resolver": {
+                        "type": "object",
+                        "required": [ "type" ],
+                        "properties": {
+                            "type": { "type": "string" },
+                            "action": { "type": "string" },
+                            "variables": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "required": ["name", "type"],
+                                    "properties": {
+                                        "name": { "type": "string" },
+                                        "type": { "type": "string" },
+                                        "defaultValue": { "type": "string" },
+                                        "options": { "type": "array" }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "defaultCue": { "type": "string" },
+        "defaultCueTimeout": { "type": "integer" }
     }
-  }
 }

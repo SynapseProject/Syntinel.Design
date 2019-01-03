@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "required": [ "id", "cue" ],
+    "properties": {
+        "id": { "type": "string" },
+        "cue": { "type": "string" },
+        "variables": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [ "name", "values" ],
+                "properties": {
+                    "name": { "type": "string" },
+                    "values": { 
+                        "type": "array",
+                        "items": { "type": "string" }
+                    }
+                }
+            }
+        }
+    }
+}

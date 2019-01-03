@@ -8,7 +8,7 @@ def lambda_handler(event, context):
 
     # Setup Database Client
     db = boto3.resource('dynamodb', region_name='us-east-1')
-    table = db.Table('Syntinel')
+    table = db.Table('syntinel-signals')
 
     # Create Random Message Id
     ts = str(time.time())
