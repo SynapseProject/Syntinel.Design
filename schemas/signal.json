@@ -16,12 +16,11 @@
             }
         },
         "cues": {
-            "type": "array",
-            "items": {
+            "type": "object",
+            "additionalProperties": {
                 "type": "object",
-                "required": [ "id", "name", "description", "resolver" ],
+                "required": [ "name", "description", "resolver" ],
                 "properties": {
-                    "id": { "type": "string" },
                     "name": { "type": "string" },
                     "description": { "type": "string" },
                     "resolver": {

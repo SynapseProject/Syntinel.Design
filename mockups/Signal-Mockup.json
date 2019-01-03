@@ -8,9 +8,9 @@
        "group": "WU2-P1-0317",
        "id": "i-06a81abcd8caa4843"
    },
-   "cues": [
-       {
-           "id": "resize",
+   "cues": 
+   {
+       "resize": {
            "name": "EC2 Resize",
            "description": "WU2P103170042 (t2.large) is 43% utilizied for the past 7 days.  Would you like to resize it?",
            "resolver": {
@@ -36,7 +36,7 @@
                ]
            }
        }
-   ],
+      },
    "defaultCue": "resize",
    "defaultCueTimeout": 4320
 }
