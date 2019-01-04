@@ -15,44 +15,44 @@ def lambda_handler(event, context):
         variables = []
         for key in qs:
             values = qs.get(key)
-            if key == '_id':
+            if key == 'id':
                 id = values[0]
-            elif key == '_cue':
+            elif key == 'cue':
                 cue = values[0]
             else :
                 variable = { "name" : key, "values" : values }
                 variables.append(variable)
         event = {
-            "_id" : id,
-            "_cue" : cue,
+            "id" : id,
+            "cue" : cue,
             "variables": variables
         }
                 
     # Process Cue Json Structure
-    id = event.get('_id')
-    cue = event.get('_cue')
+    id = event.get('id')
+    cue = event.get('cue')
     variables = event.get('variables')
     ts = str(time.time())
     actionId = str(uuid.uuid4())
     
-    event.pop("_id")
-    event.update({ "_ts": ts, "_status": "New" })
+    event.pop("id")
+    event.update({ "created": ts, "status": "New" })
 
     # Update Signal Record in DynamoDB
     db = boto3.resource('dynamodb', region_name='us-east-1')
     table = db.Table('syntinel-signals')
-    record = table.get_item(Key={'_id': id})
+    record = table.get_item(Key={'id': id})
     item = record.get('Item')
     
     if item:
         dbAction = { actionId: event }
-        actions = item.get('Actions')
+        actions = item.get('actions')
         if actions :
             actions.update(dbAction)
         else :
             actions = dbAction  
         
-        updateInfo = { '_status': 'Received', 'Actions': actions }
+        updateInfo = { 'status': 'Received', 'actions': actions }
         item.update(updateInfo)
         table.put_item(Item=item)
         
@@ -63,12 +63,10 @@ def lambda_handler(event, context):
         lam.invoke(FunctionName='MyTestResolver', InvocationType='RequestResponse', Payload=json.dumps(event))
 
         # Update Action Status To "Sent"
-        action = item.get('Actions').get(actionId)
-        action.update( {'_status': 'Sent' } )
+        action = item.get('actions').get(actionId)
+        action.update( {'status': 'Sent' } )
         table.put_item(Item=item)
-        
-        print('>> ', action)
-
+    
     else :
         raise ValueError('Signal [' + id + '] Not Found.')
 

@@ -1,4 +1,5 @@
 from __future__ import print_function # Python 2/3 compatibility
+from botocore.exceptions import ClientError
 import json
 import boto3
 import time
@@ -18,7 +19,7 @@ def lambda_handler(event, context):
         raise Exception("Unable To Generate Unique Message Id.")
     
     # Write Signal To Dynamo Database
-    dbRecord = { '_id': messageId, '_status': 'New', '_ts': ts, "Signal": event }
+    dbRecord = { 'id': messageId, 'status': 'New', 'created': ts, "signal": event }
     table.put_item(Item=dbRecord)
 
     # Put Signal Onto SNS Topic
@@ -30,7 +31,7 @@ def lambda_handler(event, context):
     snsRequestId = snsReply['ResponseMetadata']['RequestId']
 
     # Update Signal Record With SNS Info
-    addlInfo = { '_status': 'Sent', '_trace': { 'SNS': { 'MessageId': snsMessageId, 'RequestID': snsRequestId } } }
+    addlInfo = { 'status': 'Sent', 'trace': { 'SNS': { 'MessageId': snsMessageId, 'RequestID': snsRequestId } } }
     dbRecord.update(addlInfo)
     table.put_item(Item=dbRecord)
     
@@ -44,17 +45,36 @@ def lambda_handler(event, context):
 def getSignalId(table, tries = 5):
     id = None
     while tries > 0 :
-        # Generate 8 Digit Base36 Encoded String
-        id = random.randint(78364164096, 2821109907455)
-        id = base36encode(id)
-        record = table.get_item(Key={'_id': id})
-        item = record.get('Item')
-        if (item):
+        id = getId()
+        try:
+            dummyItem = {'id': id}
+            table.put_item(Item={'id': id}, ConditionExpression="attribute_not_exists(id)")
+            tries = 0   # Unique Id Found, Stop Looking
+        except ClientError as e:
+            code = e.response['Error']['Code']
+            if (code == "ConditionalCheckFailedException"):
+                print("WARNING : Id [",id,"] Already Exists.")
+            else:
+                print("ERROR :",e)
             tries -= 1
             id = None
-        else:
-            tries = 0   # Unique Id Found, Stop Looking
+
+    if (not id):
+        raise Exception('Unable To Generate Unique Id.')
     
+    return id
+
+# Creates a 9 character, Base36 Encoded Id.
+#   Based on curernt time and random numbers, this funciton will produce 9 character 
+#   ids for over 67 years from epochOffset, after which it will generate 10 character ids.
+def getId():
+    id = None
+    ephocOffset = 1546300800    # 1-JAN-2019 00:00:00 GMT
+    now = int(time.time())
+    t = base36encode(str(now - ephocOffset))            
+    r = base36encode(str(random.randint(0, 46655)))     # Create Random 3-Char Trailer For Uniqueness Within Same Second
+    
+    id = t.zfill(6) + r.zfill(3)
     return id
 
 # https://stackoverflow.com/questions/2104884/how-does-python-manage-int-and-long
