@@ -36,12 +36,12 @@ def lambda_handler(event, context):
     actionId = str(uuid.uuid4())
     
     event.pop("id")
-    event.update({ "created": ts, "status": "New" })
+    event.update({ "_ts": ts, "_status": "New" })
 
     # Update Signal Record in DynamoDB
     db = boto3.resource('dynamodb', region_name='us-east-1')
     table = db.Table('syntinel-signals')
-    record = table.get_item(Key={'id': id})
+    record = table.get_item(Key={'_id': id})
     item = record.get('Item')
     
     if item:
@@ -52,7 +52,7 @@ def lambda_handler(event, context):
         else :
             actions = dbAction  
         
-        updateInfo = { 'status': 'Received', 'actions': actions }
+        updateInfo = { '_status': 'Received', 'actions': actions }
         item.update(updateInfo)
         table.put_item(Item=item)
         
@@ -64,7 +64,7 @@ def lambda_handler(event, context):
 
         # Update Action Status To "Sent"
         action = item.get('actions').get(actionId)
-        action.update( {'status': 'Sent' } )
+        action.update( {'_status': 'Sent' } )
         table.put_item(Item=item)
     
     else :

@@ -19,7 +19,7 @@ def lambda_handler(event, context):
         raise Exception("Unable To Generate Unique Message Id.")
     
     # Write Signal To Dynamo Database
-    dbRecord = { 'id': messageId, 'status': 'New', 'created': ts, "signal": event }
+    dbRecord = { '_id': messageId, '_status': 'New', '_ts': ts, "signal": event }
     table.put_item(Item=dbRecord)
 
     # Put Signal Onto SNS Topic
@@ -31,7 +31,7 @@ def lambda_handler(event, context):
     snsRequestId = snsReply['ResponseMetadata']['RequestId']
 
     # Update Signal Record With SNS Info
-    addlInfo = { 'status': 'Sent', 'trace': { 'SNS': { 'MessageId': snsMessageId, 'RequestID': snsRequestId } } }
+    addlInfo = { '_status': 'Sent', '_trace': { 'SNS': { 'MessageId': snsMessageId, 'RequestID': snsRequestId } } }
     dbRecord.update(addlInfo)
     table.put_item(Item=dbRecord)
     
@@ -47,8 +47,7 @@ def getSignalId(table, tries = 5):
     while tries > 0 :
         id = getId()
         try:
-            dummyItem = {'id': id}
-            table.put_item(Item={'id': id}, ConditionExpression="attribute_not_exists(id)")
+            table.put_item(Item={ '_id': id }, ExpressionAttributeNames={ '#id': '_id' }, ConditionExpression="attribute_not_exists(#id)")
             tries = 0   # Unique Id Found, Stop Looking
         except ClientError as e:
             code = e.response['Error']['Code']
