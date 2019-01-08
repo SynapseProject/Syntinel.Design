@@ -1,20 +1,11 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
-    "required": [ "name", "description", "signal", "cues" ],
+    "required": [ "name", "description", "cues" ],
     "properties": {
         "name": { "type": "string" },
         "description": { "type": "string" },
         "allowMultiple": { "type": "boolean" },
-        "signal": { 
-            "type": "object",
-            "properties": {
-                "reporterId": { "type": "integer" },
-                "type": { "type": "string" },
-                "group": { "type": "string" },
-                "id": { "type": "string" }
-            }
-        },
         "cues": {
             "type": "object",
             "additionalProperties": {
@@ -29,21 +20,56 @@
                         "properties": {
                             "type": { "type": "string" },
                             "action": { "type": "string" },
-                            "variables": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "required": ["name", "type"],
-                                    "properties": {
-                                        "name": { "type": "string" },
-                                        "type": { "type": "string" },
-                                        "defaultValue": { "type": "string" },
-                                        "options": { "type": "array" }
+                            "config": { "type": "object"}
+                        }
+                    },
+                    "inputs": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": ["name", "type"],
+                            "properties": {
+                                "name": { "type": "string" },
+                                "description": { "type": "string" },
+                                "type": { "type": "string" },
+                                "defaultValue": { "type": "string" },
+                                "allowMultipleValues": { "type": "boolean" },
+                                "values": { 
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "additionalProperties": {
+                                            "type": "string"
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
+                    },
+                    "actions": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": ["name", "type"],
+                            "properties": {
+                                "name": { "type": "string" },
+                                "description": { "type": "string" },
+                                "type": { "type": "string" },
+                                "defaultValue": { "type": "string" },
+                                "allowMultipleValues": { "type": "boolean" },
+                                "values": { 
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "additionalProperties": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "defaultAction": { "type": "string" }
                 }
             }
         },
