@@ -1,18 +1,38 @@
 {
-	"id": "ABCDEFGH",
-	"cue": "resize",
-	"variables": [
-	  {
-		"name": "size",
-		"values": [
-		  "t2.micro"
-		]
-	  },
-	  {
-		"name": "instanceid",
-		"values": [
-		  "i-06a81abcd8caa4843"
-		]
-	  }
+    "id": "000000000",
+    "cue": "ec2",
+    "variables": [
+        {
+ 	        "name": "action",
+ 	        "values": [
+                "stop"
+	        ]
+        },
+        {
+            "name": "delay",
+            "values": [
+                "0"
+            ]
+        },
+        {
+            "name": "comments",
+            "values": [
+                "I have nothing to say."
+            ]
+        },
+        {
+            "name": "notify",
+            "values": [
+                "gbelson@hooli.com"
+            ]
+        },
+        {
+            "name": "day-of-the-week",
+            "values": [
+                "monday",
+                "wednesday",
+                "friday"
+            ]
+        }
 	]
-  }
+}

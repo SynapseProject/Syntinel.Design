@@ -1,42 +1,90 @@
 {
-   "name": "Utilization",
-   "description": "EC2 Utilization Montior",
-   "allowMultiple": false,
-   "signal": {
-       "reporterId": 1,
-       "type": "HighCpu",
-       "group": "WU2-P1-0317",
-       "id": "i-06a81abcd8caa4843"
-   },
-   "cues": 
-   {
-       "resize": {
-           "name": "EC2 Resize",
-           "description": "WU2P103170042 (t2.large) is 43% utilizied for the past 7 days.  Would you like to resize it?",
-           "resolver": {
-               "type": "Lambda",
-               "action": "MyTestResolver",
-               "variables": [
-                   {
-                       "name": "size",
-                       "type": "list",
-                       "options": [
-                           "t2.nano",
-                           "t2.micro",
-                           "t2.medium",
-                           "Ignore"
-                       ],
-                       "defaultValue": "t2.nano"
-                   },
-                   {
-                      "name": "instanceid",
-                      "type": "hidden",
-                      "defaultValue": "i-06a81abcd8caa4843"
-                   }
-               ]
-           }
-       }
-      },
-   "defaultCue": "resize",
-   "defaultCueTimeout": 4320
+    "name": "Utilization",
+    "description": "EC2 Utilization Montior",
+    "allowMultiple": false,
+    "cues": 
+    {
+        "ec2": {
+            "name": "EC2 Resize",
+            "description": "Server [MySimpleLinuxServer] has been running for 7 days.  Would you like to take action against it?",
+            "resolver": {
+                "type": "Lambda",
+                "action": "syntinel-resolver-ec2utils",
+                "config": {
+                    "instances": "i-06faaae2b4e00f1f5"
+                }
+            },
+            "inputs": [
+                {
+                    "name": "delay",
+                    "description": "Delay Action Duration (in minutes).",
+                    "type": "number",
+                    "defaultValue": "0"
+                },
+                {
+                    "name": "comments",
+                    "description": "Insert Comments Below.",
+                    "type": "text",
+                    "defaultValue": "Default Comment Here"
+                },
+                {
+                    "name": "notify",
+                    "description": "Email me on completion.",
+                    "type": "boolean",
+                    "defaultValue": "false"
+                },
+                {
+                    "name": "day-of-the-week",
+                    "description": "Choose the day of the week.",
+                    "type": "choice",
+                    "values": [
+                        { "monday": "Monday" },
+                        { "tuesday": "Tuesday" },
+                        { "wednesday": "Wednesday" },
+                        { "thursday": "Thursday" },
+                        { "friday": "Friday" },
+                        { "saturday": "Saturday" },
+                        { "sunday": "Sunday" }
+                    ],
+                    "allowMultipleValues": true,
+                    "defaultValue": "weekday"
+                }
+            ],
+            "actions": [
+                {
+                    "name": "Perform Action",
+                    "description": "Indicates action to take against EC2 instances.",
+                    "type": "choice",
+                    "values": [
+                        { "stop": "Stop Instance" },
+                        { "terminate": "Terminate Instance" },
+                        { "reboot": "Reboot Instance" },
+                        { "hibernate": "Stop and Hibernate Instance"}
+                    ],
+                    "defaultValue": "stop"
+                },
+                {
+                    "name": "Ignore Alert",
+                    "description": "Ingore this alert.",
+                    "type": "button",
+                    "defaultValue": "ignore"             
+                },
+                {
+                    "name": "Disable Alert",
+                    "description": "Disable this alert.",
+                    "type": "button",
+                    "defaultValue": "disable"               
+                },
+                {
+                    "name": "Help",
+                    "description": "Get Help.",
+                    "type": "link",
+                    "defaultValue": "help"               
+                }
+            ],
+            "defaultAction": "EC2Action"
+        }
+    },
+    "defaultCue": "ec2",
+    "defaultCueTimeout": 4320
 }
