@@ -5,7 +5,7 @@
     "properties": {
         "name": { "type": "string" },
         "description": { "type": "string" },
-        "allowMultiple": { "type": "boolean" },
+        "allowMultipleReplies": { "type": "boolean" },
         "cues": {
             "type": "object",
             "additionalProperties": {
