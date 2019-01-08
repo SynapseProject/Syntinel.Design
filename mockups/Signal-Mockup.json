@@ -8,10 +8,9 @@
             "name": "EC2 Resize",
             "description": "Server [MySimpleLinuxServer] has been running for 7 days.  Would you like to take action against it?",
             "resolver": {
-                "type": "Lambda",
-                "action": "syntinel-resolver-ec2utils",
+                "function": "syntinel-resolver-ec2utils",
                 "config": {
-                    "instances": "i-06faaae2b4e00f1f5"
+                    "instances": ["i-06faaae2b4e00f1f5"]
                 }
             },
             "inputs": [
@@ -82,7 +81,7 @@
                     "defaultValue": "help"               
                 }
             ],
-            "defaultAction": "EC2Action"
+            "defaultAction": "Perform Action"
         }
     },
     "defaultCue": "ec2",
