@@ -66,11 +66,12 @@ def lambda_handler(event, context):
         except:
             raise Exception("Unable To Find Resolver For Cue [", cueId, "]")
             
-        event.update({"config": config})
+        request = event
+        request.update({"config": config})
 
         # Call Lambda Function (Resolver)
         lam = boto3.client('lambda')
-        rc = lam.invoke(FunctionName=function, InvocationType='RequestResponse', Payload=json.dumps(event))
+        rc = lam.invoke(FunctionName=function, InvocationType='RequestResponse', Payload=json.dumps(request))
         
         # Update Action Status To "Sent"
         action = item.get('actions').get(actionId)
