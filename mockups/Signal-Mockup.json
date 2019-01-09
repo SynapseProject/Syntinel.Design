@@ -5,7 +5,7 @@
     "cues": 
     {
         "ec2": {
-            "name": "EC2 Resize",
+            "name": "EC2 Running",
             "description": "Server [MySimpleLinuxServer] has been running for 7 days.  Would you like to take action against it?",
             "resolver": {
                 "function": "syntinel-resolver-ec2utils",
