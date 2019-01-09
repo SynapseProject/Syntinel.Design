@@ -3,7 +3,7 @@ from urllib import parse
 import json
 import boto3
 import time
-import uuid
+import random
 
 def lambda_handler(event, context):
     
@@ -33,7 +33,7 @@ def lambda_handler(event, context):
     cue = event.get('cue')
     variables = event.get('variables')
     ts = str(time.time())
-    actionId = str(uuid.uuid4())
+    actionId = getResponseId()
     
     event.pop("id")
     event.update({ "_ts": ts, "_status": "New" })
@@ -56,12 +56,22 @@ def lambda_handler(event, context):
         item.update(updateInfo)
         table.put_item(Item=item)
         
-        #TODO : Call Resolver From Signal Message
-        
-        # Mock Call To "Resolver Lambda"
-        lam = boto3.client('lambda')
-        lam.invoke(FunctionName='MyTestResolver', InvocationType='RequestResponse', Payload=json.dumps(event))
+        try:
+            signal = item.get("signal")
+            cueId = event.get("cue")
+            cue = signal.get("cues").get(cueId)
+            resolver = cue.get("resolver")
+            function = resolver.get("function")
+            config = resolver.get("config")
+        except:
+            raise Exception("Unable To Find Resolver For Cue [", cueId, "]")
+            
+        event.update({"config": config})
 
+        # Call Lambda Function (Resolver)
+        lam = boto3.client('lambda')
+        rc = lam.invoke(FunctionName=function, InvocationType='RequestResponse', Payload=json.dumps(event))
+        
         # Update Action Status To "Sent"
         action = item.get('actions').get(actionId)
         action.update( {'_status': 'Sent' } )
@@ -77,4 +87,50 @@ def lambda_handler(event, context):
         'ts': ts
     }
     
-    return json.dumps(reply)
+    return reply
+
+# Generate Random Response Id and Check It Doesn't Already Exist
+def getResponseId():
+    id = None
+    id = getId()
+    id = "CUE-"+id
+
+    if (not id):
+        raise Exception('Unable To Generate Unique Id.')
+    
+    return id
+
+# Creates a 9 character, Base36 Encoded Id.
+#   Based on curernt time and random numbers, this funciton will produce 9 character 
+#   ids for over 67 years from epochOffset, after which it will generate 10 character ids.
+def getId():
+    id = None
+    ephocOffset = 1546300800    # 1-JAN-2019 00:00:00 GMT
+    now = int(time.time())
+    t = base36encode(str(now - ephocOffset))            
+    r = base36encode(str(random.randint(0, 46655)))     # Create Random 3-Char Trailer For Uniqueness Within Same Second
+    
+    id = t.zfill(6) + r.zfill(3)
+    return id
+
+# https://stackoverflow.com/questions/2104884/how-does-python-manage-int-and-long
+def base36encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
+    number = int(number)
+    base36 = ''
+    sign = ''
+
+    if number < 0:
+        sign = '-'
+        number = -number
+
+    if 0 <= number < len(alphabet):
+        return sign + alphabet[number]
+
+    while number != 0:
+        number, i = divmod(number, len(alphabet))
+        base36 = alphabet[i] + base36
+
+    return sign + base36
+
+def base36decode(number):
+    return int(number, 36)

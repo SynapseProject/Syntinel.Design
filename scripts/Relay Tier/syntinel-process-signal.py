@@ -35,11 +35,14 @@ def lambda_handler(event, context):
     dbRecord.update(addlInfo)
     table.put_item(Item=dbRecord)
     
-    return {
+    reply = {
         'statusCode': 200,
         'id': messageId,
         'ts': ts
     }
+
+    return reply
+
 
 # Generate Random Record Id and Check It Doesn't Already Exist
 def getSignalId(table, tries = 5):
