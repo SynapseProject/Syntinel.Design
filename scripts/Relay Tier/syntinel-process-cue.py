@@ -36,7 +36,7 @@ def lambda_handler(event, context):
     actionId = getResponseId()
     
     event.pop("id")
-    event.update({ "_ts": ts, "_status": "New" })
+    event.update({ "_ts": ts, "_status": "New", "_isValid": True })
 
     # Update Signal Record in DynamoDB
     db = boto3.resource('dynamodb', region_name='us-east-1')
@@ -59,7 +59,7 @@ def lambda_handler(event, context):
         try:
             signal = item.get("signal")
             cueId = event.get("cue")
-            cue = signal.get("cues").get(cueId)
+            cue = signal.get("cues", {}).get(cueId)
             resolver = cue.get("resolver")
             function = resolver.get("function")
             config = resolver.get("config")

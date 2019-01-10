@@ -1,7 +1,7 @@
 {
     "name": "Utilization",
     "description": "EC2 Utilization Montior",
-    "allowMultipleReplies": false,
+    "maxReplies": 1,
     "cues": 
     {
         "ec2": {

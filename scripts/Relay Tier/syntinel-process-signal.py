@@ -19,7 +19,7 @@ def lambda_handler(event, context):
         raise Exception("Unable To Generate Unique Message Id.")
     
     # Write Signal To Dynamo Database
-    dbRecord = { '_id': messageId, '_status': 'New', '_ts': ts, "signal": event }
+    dbRecord = { '_id': messageId, '_status': 'New', '_ts': ts, "signal": event, '_isActive': True }
     table.put_item(Item=dbRecord)
 
     # Put Signal Onto SNS Topic
