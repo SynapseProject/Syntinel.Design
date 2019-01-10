@@ -26,18 +26,24 @@ def lambda_handler(event, context):
         signal = item.get("signal")
         actions = item.get("actions")
         action = item.get("actions", {}).get(actionId)
+        ts = str(time.time())
         if action:
             if status:
                 action.update( { "_status": status } )
             if isValidReply == False:
                 action.update( { '_isValid': False } )
             if data:
-                ts = str(time.time())
                 trace = action.get('_trace',{})
                 trace.update( { ts : data } )
                 action.update( { '_trace': trace } )
+        else :
+            # This is a signal-level status update, log request in signal trace logs
+            trace = item.get('_trace', {})
+            trace.update( { ts : { 'STATUS': event } } )
+            item.update( { '_trace': trace } )
 
         if status:
+            # TODO : Update Overall Status Based On Heirarchy
             item.update( { '_status': status } )
 
         if closeSignal:

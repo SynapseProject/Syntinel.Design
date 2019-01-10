@@ -31,7 +31,7 @@ def lambda_handler(event, context):
     snsRequestId = snsReply['ResponseMetadata']['RequestId']
 
     # Update Signal Record With SNS Info
-    addlInfo = { '_status': 'Sent', '_trace': { 'SNS': { 'MessageId': snsMessageId, 'RequestID': snsRequestId } } }
+    addlInfo = { '_status': 'Sent', '_trace': { ts : { 'SNS': { 'MessageId': snsMessageId, 'RequestID': snsRequestId } } } }
     dbRecord.update(addlInfo)
     table.put_item(Item=dbRecord)
     
