@@ -1,0 +1,16 @@
+{
+    "id": "000000000",
+    "actionId": "CUE-000000000",
+    "status": "Completed",
+    "closeSignal": true,
+    "isValidReply": false,
+    "data": { 
+        "One": 111, 
+        "Two": 222, 
+        "Three": 333, 
+        "Stuff": { 
+            "SubOne": "One", 
+            "SubTwo": "Two"
+        } 
+    }
+  }
