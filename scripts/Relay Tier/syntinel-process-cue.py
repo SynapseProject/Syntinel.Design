@@ -47,12 +47,8 @@ def lambda_handler(event, context):
     if item:
         signal = item.get("signal")
 
-        # Validate Received Cue
-        isActive = item.get('_isActive')
-        if (isActive != True):
-            raise Exception("Signal [" + id + "] Is Not Active.")
-
-
+        validateCue(event, id, item)
+        
         dbAction = { actionId: event }
         actions = item.get('actions')
         if actions :
@@ -142,3 +138,9 @@ def base36encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
 
 def base36decode(number):
     return int(number, 36)
+    
+def validateCue(event, id, item):
+    # Validate Received Cue
+    isActive = item.get('_isActive')
+    if (isActive != True):
+        raise Exception("Signal [" + id + "] Is Not Active.")
