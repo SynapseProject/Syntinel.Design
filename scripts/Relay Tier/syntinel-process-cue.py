@@ -45,6 +45,14 @@ def lambda_handler(event, context):
     item = record.get('Item')
     
     if item:
+        signal = item.get("signal")
+
+        # Validate Received Cue
+        isActive = item.get('_isActive')
+        if (isActive != True):
+            raise Exception("Signal [" + id + "] Is Not Active.")
+
+
         dbAction = { actionId: event }
         actions = item.get('actions')
         if actions :
@@ -57,14 +65,13 @@ def lambda_handler(event, context):
         table.put_item(Item=item)
         
         try:
-            signal = item.get("signal")
             cueId = event.get("cue")
             cue = signal.get("cues", {}).get(cueId)
             resolver = cue.get("resolver")
             function = resolver.get("function")
             config = resolver.get("config")
         except:
-            raise Exception("Unable To Find Resolver For Cue [", cueId, "]")
+            raise Exception("Unable To Find Resolver For Cue [" + cueId + "]")
             
         request = event
         request.update({"config": config})
