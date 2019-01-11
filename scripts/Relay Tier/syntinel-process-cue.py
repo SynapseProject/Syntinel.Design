@@ -47,7 +47,7 @@ def lambda_handler(event, context):
     if item:
         signal = item.get("signal")
 
-        validateCue(event, id, item)
+        validateCue(event, item)
         
         dbAction = { actionId: event }
         actions = item.get('actions')
@@ -139,8 +139,22 @@ def base36encode(number, alphabet='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
 def base36decode(number):
     return int(number, 36)
     
-def validateCue(event, id, item):
-    # Validate Received Cue
+def validateCue(event, item):
+    id = item.get('_id')
+    
+    # Check if Signal Message Is Still Active
     isActive = item.get('_isActive')
     if (isActive != True):
         raise Exception("Signal [" + id + "] Is Not Active.")
+        
+    # Check to see if maximum number of valid replies has been exceeded.
+    maxReplies = item.get('signal',{}).get('maxReplies', 0)
+    if maxReplies > 0:
+        actions = item.get("actions", {})
+        validActionCount = 0
+        for action in actions:
+            if (actions.get(action,{}).get('_isValid', True)):
+                validActionCount += 1
+        
+        if (validActionCount >= maxReplies):
+            raise Exception("Signal [" + str(id) + "] Has Exceeded the Maximum Valid Replies Allowed.")
