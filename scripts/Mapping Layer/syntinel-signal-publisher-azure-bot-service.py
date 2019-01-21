@@ -75,17 +75,17 @@ def CreateSlackMessage(signalId, signal, recipient):
     cues = signal.get('cues', {})
     attachments = message.get('value').get('attachments')
     for cue in cues:
-        attachment = CreateAttachment(cue, cues.get(cue))
+        attachment = CreateAttachment(signalId, cue, cues.get(cue))
         attachments.append(attachment)
 
     return message
     
-def CreateAttachment(cueId, cue):
+def CreateAttachment(signalId, cueId, cue):
     cueTitle = cue.get('name', "Alert") + " : " + cue.get('description')
     
     attachment = {
         'text': cueTitle,
-        'callback_id': "1234567890",
+        'callback_id': signalId + "|" + cueId,
         'color': 'good',
         'actions': []
     }

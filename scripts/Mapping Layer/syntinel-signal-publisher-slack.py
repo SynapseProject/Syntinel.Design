@@ -6,87 +6,63 @@ import os
 
 def lambda_handler(event, context):
 
-    replies = []
-
     for record in event.get('Records'):
         sns = record.get('Sns', {}).get('Message')
         if sns:
             sns = json.loads(sns)
             signal = sns.get('signal', {})
             signalId = sns.get('_id')
-            conversationId = getConversationId()
-            body = CreateSlackMessage(signalId, signal, "#syntinel@slack")
-            reply = sendMessage(conversationId, body)
-            replies.append(reply)
-    
+            body = CreateSlackMessage(signalId, signal)
+            sendMessage(body)
+            print(">>> Body :", body)
+
     return {
-        'statusCode': 200,
-        'reply': replies
+        'statusCode': 200
     }
 
-def getConversationId():
-    conversationId = None
-    url = 'https://directline.botframework.com/v3/directline/conversations'
-    headers = {
-        "Authorization": "Bearer " + os.environ['BearerToken']
-    }
-
-    response = requests.post(url, headers=headers)
-
-    if (response.ok) :
-        status = response.status_code
-        content = json.loads(response.content)
-        conversationId = content.get('conversationId')
-        
-    return conversationId
-
-def sendMessage(conversationId, body):
+def sendMessage(body):
     content = None
-    url = 'https://directline.botframework.com/v3/directline/conversations/' + conversationId + '/activities'
+    url = os.environ['WebHook']
     headers = {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + os.environ['BearerToken']
+        "Content-Type": "application/json"
     }
 
     msgResponse = requests.post(url, headers=headers, data=json.dumps(body))
+    print(">>> MsgRsp :", msgResponse)
+    print(">>> Content :", msgResponse.content)
     if (msgResponse.ok) :
         status = msgResponse.status_code
-        content = json.loads(msgResponse.content)
 
-    return content
+    return status
     
-def CreateSlackMessage(signalId, signal, recipient):
+def CreateSlackMessage(signalId, signal):
     mainTitle = signal.get('name', "Alert") + " : " + signal.get('description')
     
     message = {
-        "type": "message",
-        "from": {
-            "id": signalId
-        },
-        "text": "notify " + recipient,
-        "value": {
-            "text": mainTitle,
-            "attachments": [],
-            "valueType": "application/json"
-        }
+        "text": mainTitle,
+        "attachments": [],
+        "valueType": "application/json"
     }
     
     cues = signal.get('cues', {})
-    attachments = message.get('value').get('attachments')
+    attachments = message.get('attachments')
     for cue in cues:
-        attachment = CreateAttachment(cue, cues.get(cue))
+        attachment = CreateAttachment(signalId, cue, cues.get(cue))
         attachments.append(attachment)
 
     return message
     
-def CreateAttachment(cueId, cue):
+def CreateAttachment(signalId, cueId, cue):
     cueTitle = cue.get('name', "Alert") + " : " + cue.get('description')
+    
+    print(">>> SignalId:", signalId)
+    print(">>> CueId :", cueId)
     
     attachment = {
         'text': cueTitle,
-        'callback_id': "1234567890",
+        'callback_id': signalId + "|" + cueId,
         'color': 'good',
-        'actions': []
+        'actions': [],
     }
     
     for action in cue.get('actions'):
