@@ -7,7 +7,7 @@ import random
 
 def lambda_handler(event, context):
 
-    print(event)
+    print("Event:", event)
     
     # Process Signal Json Structure
     id = event.get('id')
@@ -60,4 +60,5 @@ def lambda_handler(event, context):
         'statusCode': 200
     }
     
+    print("Reply:", reply)
     return reply

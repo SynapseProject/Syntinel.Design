@@ -7,7 +7,7 @@ import random
 
 def lambda_handler(event, context):
     
-    print(event)
+    print("Event:", event)
     queryString = event.get('_qs')
 
     # Values came in on the query string, parse them into the json structure
@@ -78,8 +78,6 @@ def lambda_handler(event, context):
             'config': config
         }
         
-        print(">>> Request :", request)
-
         # Call Lambda Function (Resolver)
         lam = boto3.client('lambda')
         rc = lam.invoke(FunctionName=function, InvocationType='Event', Payload=json.dumps(request))
@@ -93,12 +91,13 @@ def lambda_handler(event, context):
         raise ValueError('Signal [' + id + '] Not Found.')
 
     reply = {
-        'statusCode': 200,
+        'statusCode': rc.get('StatusCode', 0),
         'id': id,
         'actionId': actionId,
         'ts': ts
     }
     
+    print("Reply:", reply)
     return reply
 
 # Generate Random Response Id and Check It Doesn't Already Exist

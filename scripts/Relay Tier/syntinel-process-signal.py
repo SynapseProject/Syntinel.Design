@@ -7,7 +7,7 @@ import random
 
 def lambda_handler(event, context):
 
-    print(event)
+    print("Event:", event)
 
     # Setup Database Client
     db = boto3.resource('dynamodb', region_name='us-east-1')
@@ -43,6 +43,7 @@ def lambda_handler(event, context):
         'ts': ts
     }
 
+    print("Reply:", reply)
     return reply
 
 

@@ -6,39 +6,37 @@ import html
 
 def lambda_handler(event, context):
     
-    print(event)
+    print("Event:", event)
     
     slackReply = event.get('body-json')
     azureBotReply = event.get('Payload')
     if slackReply:
         if slackReply.startswith("payload="):
-            print(">>> Got SlackBot Reply")
+            print("SlackBot Reply")
             slackReply = slackReply.replace("payload=", "")
             slackReply = slackReply.replace("+", " ")
             slackReply = unquote(slackReply)
             slackReply = json.loads(slackReply)
     elif azureBotReply:
-        print(">>> Got AzureBot Service Reply")
+        print("AzureBot Service Reply")
         slackReply = azureBotReply
     else:
-        print(">>> Got Some Other Reply")
+        print("Unknown Reply")
         slackReply = event
 
-    ts = str(int(time.time()))
-    fileName = "Reply-" + ts + "-SlackMessage.log"
-    rawFileName = "Reply-" + ts + "-SlackRaw.log"
+#    ts = str(int(time.time()))
+#    fileName = "Reply-" + ts + "-SlackMessage.log"
+#    rawFileName = "Reply-" + ts + "-SlackRaw.log"
     
-    s3 = boto3.client('s3')
-    s3.put_object(Body=json.dumps(slackReply), 
-        Bucket='guywaguespack-public', 
-        Key=fileName)
+#    s3 = boto3.client('s3')
+#    s3.put_object(Body=json.dumps(slackReply), 
+#        Bucket='guywaguespack-public', 
+#        Key=fileName)
         
-    s3.put_object(Body=json.dumps(event), 
-        Bucket='guywaguespack-public', 
-        Key=rawFileName)
+#    s3.put_object(Body=json.dumps(event), 
+#        Bucket='guywaguespack-public', 
+#        Key=rawFileName)
         
-    print ("Reply :", slackReply)
-    
     callbackId = slackReply.get('callback_id')
     if '|' in callbackId:
         callbackId = callbackId.split("|")
@@ -71,19 +69,20 @@ def lambda_handler(event, context):
                 action = option.get('value')
                 values.append(action)
         
-    print("Cue :", cue)
-
-
     # Call Cue Processor
     function = "syntinel-process-cue"
     lam = boto3.client('lambda')
     rc = lam.invoke(FunctionName=function, InvocationType='RequestResponse', Payload=json.dumps(cue))
 
-#    print(">>> RC :", rc)        
+    payload = json.loads(rc['Payload'].read().decode("utf-8"))
+    errorMessage = payload.get('errorMessage')
 
-    return "Message Received and Logged!"
-    
-#    return {
-#        'statusCode': 200,
-#        'body': 'Message Received and Logged!'
-#    }
+    if errorMessage:
+        retStr = "Error Occured! - " + errorMessage +" - " + json.dumps(payload)
+    else:
+        replyId = payload.get("id", signalId)
+        replyActionId = payload.get('actionId', "Unknown")
+        retStr = "Cue Received! - SignalId: [" + replyId + "], ActionId: [" + replyActionId + "]." 
+        
+    print("Reply:", retStr)
+    return retStr

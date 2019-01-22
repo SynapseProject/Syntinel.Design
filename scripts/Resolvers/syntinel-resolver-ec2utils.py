@@ -6,7 +6,7 @@ import os
 
 def lambda_handler(event, context):
     
-    print(event)
+    print("Event:", event)
     signalId = event.get('id')
     actionId = event.get('actionId')
 
@@ -71,11 +71,14 @@ def lambda_handler(event, context):
                 
     setStatus(signalId, actionId, 'Completed', True, True, None)
 
-    return {
+    reply = {
         'statusCode': 200,
         'body': rc,
         'statusMessage': "Success"
     }
+    
+    print("Reply:", reply)
+    return reply
 
 def array2dictionary(array, indexBy):
     retDict = {}

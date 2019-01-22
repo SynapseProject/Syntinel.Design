@@ -6,7 +6,7 @@ import os
 
 def lambda_handler(event, context):
 
-    print(event)
+    print("Event:", event)
 
     for record in event.get('Records'):
         sns = record.get('Sns', {}).get('Message')
@@ -18,9 +18,12 @@ def lambda_handler(event, context):
             sendMessage(body)
             print(">>> Body :", body)
 
-    return {
+    reply = {
         'statusCode': 200
     }
+    
+    print("Reply:", reply)
+    return reply
 
 def sendMessage(body):
     content = None

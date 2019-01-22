@@ -6,7 +6,7 @@ import os
 
 def lambda_handler(event, context):
 
-    print(event)
+    print("Event:", event)
 
     replies = []
 
@@ -22,10 +22,13 @@ def lambda_handler(event, context):
             reply = sendMessage(conversationId, body)
             replies.append(reply)
     
-    return {
+    reply = {
         'statusCode': 200,
         'reply': replies
     }
+    
+    print("Reply:", reply)
+    return reply
 
 def getConversationId():
     conversationId = None
