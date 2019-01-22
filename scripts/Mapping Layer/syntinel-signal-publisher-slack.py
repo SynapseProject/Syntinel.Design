@@ -16,7 +16,6 @@ def lambda_handler(event, context):
             signalId = sns.get('_id')
             body = CreateSlackMessage(signalId, signal)
             sendMessage(body)
-            print(">>> Body :", body)
 
     reply = {
         'statusCode': 200
@@ -33,8 +32,6 @@ def sendMessage(body):
     }
 
     msgResponse = requests.post(url, headers=headers, data=json.dumps(body))
-    print(">>> MsgRsp :", msgResponse)
-    print(">>> Content :", msgResponse.content)
     if (msgResponse.ok) :
         status = msgResponse.status_code
 
@@ -59,9 +56,6 @@ def CreateSlackMessage(signalId, signal):
     
 def CreateAttachment(signalId, cueId, cue):
     cueTitle = cue.get('name', "Alert") + " : " + cue.get('description')
-    
-    print(">>> SignalId:", signalId)
-    print(">>> CueId :", cueId)
     
     attachment = {
         'text': cueTitle,

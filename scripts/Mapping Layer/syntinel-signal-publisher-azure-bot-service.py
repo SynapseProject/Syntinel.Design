@@ -18,7 +18,6 @@ def lambda_handler(event, context):
             signalId = sns.get('_id')
             conversationId = getConversationId()
             body = CreateSlackMessage(signalId, signal, "#syntinel@slack")
-            print(">>> Body:", body)
             reply = sendMessage(conversationId, body)
             replies.append(reply)
     

@@ -76,12 +76,12 @@ def lambda_handler(event, context):
 
     payload = json.loads(rc['Payload'].read().decode("utf-8"))
     errorMessage = payload.get('errorMessage')
+    replyId = payload.get("id", signalId)
+    replyActionId = payload.get('actionId', "Unknown")
 
     if errorMessage:
-        retStr = "Error Occured! - " + errorMessage +" - " + json.dumps(payload)
+        retStr = "Error Occured! - " + errorMessage + "- SignalId: [" + replyId + "], ActionId: [" + replyActionId + "]." 
     else:
-        replyId = payload.get("id", signalId)
-        replyActionId = payload.get('actionId', "Unknown")
         retStr = "Cue Received! - SignalId: [" + replyId + "], ActionId: [" + replyActionId + "]." 
         
     print("Reply:", retStr)
