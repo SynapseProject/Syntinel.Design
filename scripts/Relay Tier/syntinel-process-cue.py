@@ -7,6 +7,7 @@ import random
 
 def lambda_handler(event, context):
     
+    print(event)
     queryString = event.get('_qs')
 
     # Values came in on the query string, parse them into the json structure
@@ -69,12 +70,19 @@ def lambda_handler(event, context):
         except:
             raise Exception("Unable To Find Resolver For Cue [" + cueId + "]")
             
-        request = event
-        request.update({"config": config})
+        request = {
+            'id': id,
+            'actionId': actionId,
+            'cue': cueId,
+            'variables': event.get('variables', []),
+            'config': config
+        }
+        
+        print(">>> Request :", request)
 
         # Call Lambda Function (Resolver)
         lam = boto3.client('lambda')
-        rc = lam.invoke(FunctionName=function, InvocationType='RequestResponse', Payload=json.dumps(request))
+        rc = lam.invoke(FunctionName=function, InvocationType='Event', Payload=json.dumps(request))
         
         # Update Action Status To "Sent"
         action = item.get('actions').get(actionId)

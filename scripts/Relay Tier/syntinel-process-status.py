@@ -6,6 +6,8 @@ import time
 import random
 
 def lambda_handler(event, context):
+
+    print(event)
     
     # Process Signal Json Structure
     id = event.get('id')

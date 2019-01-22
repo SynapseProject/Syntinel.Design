@@ -1,9 +1,15 @@
 from __future__ import print_function # Python 2/3 compatibility
 import json
 import boto3
+from botocore.vendored import requests
+import os
 
 def lambda_handler(event, context):
     
+    print(event)
+    signalId = event.get('id')
+    actionId = event.get('actionId')
+
     variables = event.get("variables")
     if (variables):
         variables = array2dictionary(variables, "name")
@@ -22,7 +28,6 @@ def lambda_handler(event, context):
             
         try:
             instances = config.get("instances")
-            print (">>> Instances :", instances)
         except:
             instances = None
 
@@ -63,6 +68,8 @@ def lambda_handler(event, context):
                 print("Instances", instances, "hibernated.")
             else:
                 print("No Instances Specified.")
+                
+    setStatus(signalId, actionId, 'Completed', True, True, None)
 
     return {
         'statusCode': 200,
@@ -78,3 +85,19 @@ def array2dictionary(array, indexBy):
             retDict[key] = node
 
     return retDict
+
+def setStatus(signalId, actionId, status, closeSignal, isValid, data):
+
+    message = { "id": signalId }
+    if actionId:
+        message.update( { "actionId": actionId } )
+    if status:
+        message.update( { "status": status } )
+    if closeSignal:
+        message.update( { "closeSignal": closeSignal } )
+    if isValid:
+        message.update( { "isValidReply": isValid } )
+    if data:
+        message.update( { "data": data } )
+        
+    response = requests.post(os.environ['StatusUrl'], data=json.dumps(message))

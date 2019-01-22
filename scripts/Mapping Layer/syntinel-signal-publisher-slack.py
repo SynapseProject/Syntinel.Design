@@ -6,6 +6,8 @@ import os
 
 def lambda_handler(event, context):
 
+    print(event)
+
     for record in event.get('Records'):
         sns = record.get('Sns', {}).get('Message')
         if sns:

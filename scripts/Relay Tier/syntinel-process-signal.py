@@ -7,6 +7,8 @@ import random
 
 def lambda_handler(event, context):
 
+    print(event)
+
     # Setup Database Client
     db = boto3.resource('dynamodb', region_name='us-east-1')
     table = db.Table('syntinel-signals')

@@ -6,6 +6,8 @@ import html
 
 def lambda_handler(event, context):
     
+    print(event)
+    
     slackReply = event.get('body-json')
     azureBotReply = event.get('Payload')
     if slackReply:
