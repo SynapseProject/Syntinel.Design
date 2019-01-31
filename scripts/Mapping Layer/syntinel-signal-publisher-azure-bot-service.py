@@ -8,32 +8,29 @@ def lambda_handler(event, context):
 
     print("Event:", event)
 
-    replies = []
+    signal = event.get('signal', {})
+    channel = event.get('channel')
+    if channel:
+        signalId = event.get('id')
+        token = channel.get('config', {}).get('bearerToken')
+        target = channel.get('target')
+        conversationId = getConversationId(token)
+        body = CreateSlackMessage(signalId, signal, target)
+        botReply = sendMessage(conversationId, token, body)
 
-    for record in event.get('Records'):
-        sns = record.get('Sns', {}).get('Message')
-        if sns:
-            sns = json.loads(sns)
-            signal = sns.get('signal', {})
-            signalId = sns.get('_id')
-            conversationId = getConversationId()
-            body = CreateSlackMessage(signalId, signal, "#syntinel@slack")
-            reply = sendMessage(conversationId, body)
-            replies.append(reply)
-    
     reply = {
         'statusCode': 200,
-        'reply': replies
+        'reply': botReply
     }
     
     print("Reply:", reply)
     return reply
 
-def getConversationId():
+def getConversationId(token):
     conversationId = None
     url = 'https://directline.botframework.com/v3/directline/conversations'
     headers = {
-        "Authorization": "Bearer " + os.environ['BearerToken']
+        "Authorization": "Bearer " + token
     }
 
     response = requests.post(url, headers=headers)
@@ -45,12 +42,12 @@ def getConversationId():
         
     return conversationId
 
-def sendMessage(conversationId, body):
+def sendMessage(conversationId, token, body):
     content = None
     url = 'https://directline.botframework.com/v3/directline/conversations/' + conversationId + '/activities'
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + os.environ['BearerToken']
+        "Authorization": "Bearer " + token
     }
 
     msgResponse = requests.post(url, headers=headers, data=json.dumps(body))

@@ -8,14 +8,15 @@ def lambda_handler(event, context):
 
     print("Event:", event)
 
-    for record in event.get('Records'):
-        sns = record.get('Sns', {}).get('Message')
-        if sns:
-            sns = json.loads(sns)
-            signal = sns.get('signal', {})
-            signalId = sns.get('_id')
-            body = CreateSlackMessage(signalId, signal)
-            sendMessage(body)
+    signal = event.get('signal', {})
+    channel = event.get('channel')
+    if channel:
+        webhook = channel.get('target')
+        signalId = event.get('id')
+        body = CreateSlackMessage(signalId, signal)
+        sendMessage(webhook, body)
+    else:
+        raise Exception ("Channel Information Was Not Provided.")
 
     reply = {
         'statusCode': 200
@@ -24,14 +25,13 @@ def lambda_handler(event, context):
     print("Reply:", reply)
     return reply
 
-def sendMessage(body):
+def sendMessage(webhook, body):
     content = None
-    url = os.environ['WebHook']
     headers = {
         "Content-Type": "application/json"
     }
 
-    msgResponse = requests.post(url, headers=headers, data=json.dumps(body))
+    msgResponse = requests.post(webhook, headers=headers, data=json.dumps(body))
     if (msgResponse.ok) :
         status = msgResponse.status_code
 

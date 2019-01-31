@@ -1,0 +1,34 @@
+{
+    "id": "00000000",
+    "name": "Guy's EC2 Monitor",
+    "description": "Polls EC2 Instances daily and report any that are still up.",
+    "subscribers" : [
+        {
+            "type": "slack",
+            "name": "general",
+            "description": "The #general channel in ChateauxHomeaux",
+            "target": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/xxxxxxxxxxxxxxxxxxxxxxx",
+            "config": {
+
+            }
+        },
+        {
+            "type": "slack",
+            "name": "capacity_optimisation",
+            "description": "The #capacity_optimisation channel in Enterprise",
+            "target": "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/xxxxxxxxxxxxxxxxxxxxxxx",
+            "config": {
+
+            }
+        },
+        {
+            "type": "azure-bot-service",
+            "name": "syntinel",
+            "description": "The #syntinel channel in Syntinel",
+            "target": "#syntinel@slack",
+            "config": {
+                "bearerToken": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            }
+        }
+    ]
+}

@@ -2,6 +2,7 @@
     "name": "Utilization",
     "description": "EC2 Utilization Montior",
     "maxReplies": 1,
+    "reporterId": "000000000",
     "cues": 
     {
         "ec2": {

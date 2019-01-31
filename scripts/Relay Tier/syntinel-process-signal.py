@@ -8,9 +8,16 @@ import random
 def lambda_handler(event, context):
 
     print("Event:", event)
+    
+    # Retrieve Reporter Record
+    reporterId = event.get('reporterId')
+    if not reporterId:
+        raise Exception("No Reporter Id Was Specified.")
+    db = boto3.resource('dynamodb', region_name='us-east-1')
+    reporterTable = db.Table('syntinel-reporters')
+    reporter = reporterTable.get_item(Key={'_id': reporterId}).get('Item')
 
     # Setup Database Client
-    db = boto3.resource('dynamodb', region_name='us-east-1')
     table = db.Table('syntinel-signals')
 
     # Create Random Message Id
@@ -24,16 +31,27 @@ def lambda_handler(event, context):
     dbRecord = { '_id': messageId, '_status': 'New', '_ts': ts, "signal": event, '_isActive': True }
     table.put_item(Item=dbRecord)
 
-    # Put Signal Onto SNS Topic
-    sns = boto3.client('sns')
-    topic_arn = 'arn:aws:sns:us-east-1:121808128646:syntinel-alerts'
-    snsReply = sns.publish(TopicArn=topic_arn, Message=json.dumps(dbRecord), Subject='Syntinel Signal Received')
+    channels = reporter.get('channels', {})
+    sendResults = []
+    for channel in channels:
+        type = channel.get('type')
+        lambdaName = 'syntinel-signal-publisher-' + type
+        lambdaRecord = { 'id': messageId, 'signal': event, 'channel': channel }
 
-    snsMessageId = snsReply['MessageId']
-    snsRequestId = snsReply['ResponseMetadata']['RequestId']
+        # Invoke Lambda Function
+        lam = boto3.client('lambda')
+        rc = lam.invoke(FunctionName=lambdaName, InvocationType='Event', Payload=json.dumps(lambdaRecord))
+
+    # Put Signal Onto SNS Topic
+#    sns = boto3.client('sns')
+#    topic_arn = 'arn:aws:sns:us-east-1:121808128646:syntinel-alerts'
+#    snsReply = sns.publish(TopicArn=topic_arn, Message=json.dumps(dbRecord), Subject='Syntinel Signal Received')
+
+#    snsMessageId = snsReply['MessageId']
+#    snsRequestId = snsReply['ResponseMetadata']['RequestId']
 
     # Update Signal Record With SNS Info
-    addlInfo = { '_status': 'Sent', '_trace': { ts : { 'SNS': { 'MessageId': snsMessageId, 'RequestID': snsRequestId } } } }
+    addlInfo = { '_status': 'Sent', '_trace': { ts : "Hello World" } }
     dbRecord.update(addlInfo)
     table.put_item(Item=dbRecord)
     
