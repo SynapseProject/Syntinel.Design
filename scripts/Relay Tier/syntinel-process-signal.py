@@ -4,6 +4,7 @@ import json
 import boto3
 import time
 import random
+import os
 
 def lambda_handler(event, context):
 
@@ -12,7 +13,12 @@ def lambda_handler(event, context):
     # Retrieve Reporter Record
     reporterId = event.get('reporterId')
     if not reporterId:
-        raise Exception("No Reporter Id Was Specified.")
+        try:
+            reporterId = os.environ['DefaultReporterId']
+            print("Reporter Id Not Specified.  Using Default Id [", reporterId, "]" )
+        except:
+            raise Exception("No Reporter Id Was Specified.")
+            
     db = boto3.resource('dynamodb', region_name='us-east-1')
     reporterTable = db.Table('syntinel-reporters')
     reporter = reporterTable.get_item(Key={'_id': reporterId}).get('Item')
@@ -40,18 +46,10 @@ def lambda_handler(event, context):
 
         # Invoke Lambda Function
         lam = boto3.client('lambda')
+        print(messageId, "Signal Sent :", lambdaName, "-", channel.get('name'))
         rc = lam.invoke(FunctionName=lambdaName, InvocationType='Event', Payload=json.dumps(lambdaRecord))
 
-    # Put Signal Onto SNS Topic
-#    sns = boto3.client('sns')
-#    topic_arn = 'arn:aws:sns:us-east-1:121808128646:syntinel-alerts'
-#    snsReply = sns.publish(TopicArn=topic_arn, Message=json.dumps(dbRecord), Subject='Syntinel Signal Received')
-
-#    snsMessageId = snsReply['MessageId']
-#    snsRequestId = snsReply['ResponseMetadata']['RequestId']
-
-    # Update Signal Record With SNS Info
-    addlInfo = { '_status': 'Sent', '_trace': { ts : "Hello World" } }
+    addlInfo = { '_status': 'Sent' }
     dbRecord.update(addlInfo)
     table.put_item(Item=dbRecord)
     

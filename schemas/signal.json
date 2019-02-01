@@ -6,6 +6,7 @@
         "name": { "type": "string" },
         "description": { "type": "string" },
         "maxReplies": { "type": "integer" },
+        "reporterId": { "type": "string" },
         "cues": {
             "type": "object",
             "additionalProperties": {
