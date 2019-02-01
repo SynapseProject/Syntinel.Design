@@ -39,24 +39,40 @@ def lambda_handler(event, context):
 
     channels = reporter.get('channels', {})
     sendResults = []
+    totalCount = 0
+    failureCount = 0
+    statusCode = "Success"
     for channel in channels:
+        totalCount += 1
         type = channel.get('type')
         lambdaName = 'syntinel-signal-publisher-' + type
         lambdaRecord = { 'id': messageId, 'signal': event, 'channel': channel }
 
         # Invoke Lambda Function
-        lam = boto3.client('lambda')
-        print(messageId, "Signal Sent :", lambdaName, "-", channel.get('name'))
-        rc = lam.invoke(FunctionName=lambdaName, InvocationType='Event', Payload=json.dumps(lambdaRecord))
+        status = { 'code': 'Success', 'channel': channel.get('name'), 'type': type, 'message': "Signal Sent" }
+        try :
+            lam = boto3.client('lambda')
+            rc = lam.invoke(FunctionName=lambdaName, InvocationType='Event', Payload=json.dumps(lambdaRecord))
+        except Exception as err:
+            statusCode = "SuccessWithErrors"
+            status.update( { 'code': 'Failure', 'message': str(err) } )
+            failureCount += 1
+
+        print(messageId, status, "(", lambdaName, ")")
+        sendResults.append(status)
 
     addlInfo = { '_status': 'Sent' }
     dbRecord.update(addlInfo)
     table.put_item(Item=dbRecord)
     
+    if totalCount == failureCount and totalCount > 0:
+        statusCode = "Failure"
+    
     reply = {
-        'statusCode': 200,
+        'statusCode': statusCode,
         'id': messageId,
-        'ts': ts
+        'ts': ts,
+        'results': sendResults
     }
 
     print("Reply:", reply)

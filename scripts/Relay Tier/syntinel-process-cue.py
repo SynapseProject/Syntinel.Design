@@ -91,7 +91,7 @@ def lambda_handler(event, context):
         raise ValueError('Signal [' + id + '] Not Found.')
 
     reply = {
-        'statusCode': rc.get('StatusCode', 0),
+        'statusCode': "Success",
         'id': id,
         'actionId': actionId,
         'ts': ts

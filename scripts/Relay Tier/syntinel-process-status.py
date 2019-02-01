@@ -57,7 +57,7 @@ def lambda_handler(event, context):
         raise ValueError('Signal [' + id + '] Not Found.')
 
     reply = {
-        'statusCode': 200
+        'statusCode': "Success"
     }
     
     print("Reply:", reply)
