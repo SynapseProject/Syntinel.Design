@@ -17,9 +17,9 @@
                     "description": { "type": "string" },
                     "resolver": {
                         "type": "object",
-                        "required": [ "function" ],
+                        "required": [ "name" ],
                         "properties": {
-                            "function": { "type": "string" },
+                            "name": { "type": "string" },
                             "config": { "type": "object"}
                         }
                     },

@@ -65,7 +65,8 @@ def lambda_handler(event, context):
             cueId = event.get("cue")
             cue = signal.get("cues", {}).get(cueId)
             resolver = cue.get("resolver")
-            function = resolver.get("function")
+            function = resolver.get("name")
+            function = "syntinel-resolver-" + function
             config = resolver.get("config")
         except:
             raise Exception("Unable To Find Resolver For Cue [" + cueId + "]")
