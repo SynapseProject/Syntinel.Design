@@ -82,7 +82,7 @@ def lambda_handler(event, context):
         # Call Lambda Function (Resolver)
         lam = boto3.client('lambda')
         rc = lam.invoke(FunctionName=function, InvocationType='Event', Payload=json.dumps(request))
-        
+
         # Update Action Status To "Sent"
         action = item.get('actions').get(actionId)
         action.update( {'_status': 'Sent' } )

@@ -69,7 +69,7 @@ def lambda_handler(event, context):
             else:
                 print("No Instances Specified.")
                 
-    setStatus(signalId, actionId, 'Completed', True, True, None)
+    setStatus(signalId, actionId, 'Completed', False, True, None)
 
     reply = {
         'statusCode': 200,
