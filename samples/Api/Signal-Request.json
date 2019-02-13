@@ -1,0 +1,47 @@
+{
+    "Name": "Utilization",
+    "Description": "EC2 Utilization Montior",
+    "MaxReplies": 1,
+    "Cues":
+    {
+        "ec2": {
+            "Name": "EC2 Usage",
+            "Description": "Server [MySimpleLinuxServer] has been running for 7 days.  Would you like to take action against it?",
+            "Resolver": {
+                "Name": "syntinel-resolver-ec2utils",
+                "Config": {
+                    "Instances": ["i-009cffa33db569230"]
+                }
+            },
+            "Actions": [
+                {
+                    "Name": "Perform Action",
+                    "Description": "Indicates action to take against EC2 instances.",
+                    "Type": "Choice",
+                    "Values": [
+                        { "stop": "Stop Instance" },
+                        { "terminate": "Terminate Instance" },
+                        { "reboot": "Reboot Instance" },
+                        { "hibernate": "Stop and Hibernate Instance"}
+                    ],
+                    "DefaultValue": "stop"
+                },
+                {
+                    "Name": "Ignore Alert",
+                    "Description": "Ingore this alert.",
+                    "Type": "Button",
+                    "DefaultValue": "ignore"            
+                },
+                {
+                    "Name": "Disable Alert",
+                    "Description": "Disable this alert.",
+                    "Type": "Button",
+                    "DefaultValue": "disable"              
+                }
+            ],
+            "DefaultAction": "Perform Action"
+        }
+    },
+    "DefaultCue": "ec2",
+    "DefaultCueTimeout": 4320
+}

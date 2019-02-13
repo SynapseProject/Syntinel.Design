@@ -1,10 +1,10 @@
 {
-    "id": "000000000",
-    "actionId": "CUE-000000000",
-    "status": "Completed",
-    "closeSignal": true,
-    "isValidReply": false,
-    "data": { 
+    "Id": "000000000",
+    "ActionId": "CUE-000000000",
+    "NewStatus": "Completed",
+    "CloseSignal": true,
+    "IsValidReply": false,
+    "Data": { 
         "One": 111, 
         "Two": 222, 
         "Three": 333, 
