@@ -1,47 +1,48 @@
 {
-    "Name": "Utilization",
-    "Description": "EC2 Utilization Montior",
-    "MaxReplies": 1,
-    "Cues":
+    "reporterId": "000000000",
+    "name": "Utilization",
+    "description": "EC2 Utilization Montior",
+    "maxReplies": 1,
+    "cues":
     {
         "ec2": {
-            "Name": "EC2 Usage",
-            "Description": "Server [MySimpleLinuxServer] has been running for 7 days.  Would you like to take action against it?",
-            "Resolver": {
-                "Name": "syntinel-resolver-ec2utils",
-                "Config": {
-                    "Instances": ["i-009cffa33db569230"]
+            "name": "EC2 Usage",
+            "description": "Server [MySimpleLinuxServer] has been running for 7 days.  Would you like to take action against it?",
+            "resolver": {
+                "name": "syntinel-resolver-ec2utils",
+                "config": {
+                    "instances": ["i-009cffa33db569230"]
                 }
             },
-            "Actions": [
+            "actions": [
                 {
-                    "Name": "Perform Action",
-                    "Description": "Indicates action to take against EC2 instances.",
-                    "Type": "Choice",
-                    "Values": [
-                        { "stop": "Stop Instance" },
-                        { "terminate": "Terminate Instance" },
-                        { "reboot": "Reboot Instance" },
-                        { "hibernate": "Stop and Hibernate Instance"}
-                    ],
-                    "DefaultValue": "stop"
+                    "name": "Perform Action",
+                    "description": "Indicates action to take against EC2 instances.",
+                    "type": "Choice",
+                    "values": {
+                        "stop": "Stop Instance",
+                        "terminate": "Terminate Instance",
+                        "reboot": "Reboot Instance",
+                        "hibernate": "Stop and Hibernate Instance"
+                    },
+                    "defaultValue": "stop"
                 },
                 {
-                    "Name": "Ignore Alert",
-                    "Description": "Ingore this alert.",
-                    "Type": "Button",
-                    "DefaultValue": "ignore"            
+                    "name": "Ignore Alert",
+                    "description": "Ingore this alert.",
+                    "type": "Button",
+                    "defaultValue": "ignore"            
                 },
                 {
-                    "Name": "Disable Alert",
-                    "Description": "Disable this alert.",
-                    "Type": "Button",
-                    "DefaultValue": "disable"              
+                    "name": "Disable Alert",
+                    "description": "Disable this alert.",
+                    "type": "Button",
+                    "defaultValue": "disable"              
                 }
             ],
-            "DefaultAction": "Perform Action"
+            "defaultAction": "Perform Action"
         }
     },
-    "DefaultCue": "ec2",
-    "DefaultCueTimeout": 4320
+    "defaultCue": "ec2",
+    "defaultCueTimeout": 4320
 }

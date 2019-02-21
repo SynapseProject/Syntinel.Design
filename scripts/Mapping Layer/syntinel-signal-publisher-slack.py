@@ -81,15 +81,14 @@ def CreateAction(action):
     type = action.get('type')
     values = action.get('values', {})
     defaultValue = action.get('defaultValue')
-    if type == 'choice':
+    if type == 'Choice':
         newAction.update( { 'type': 'select' } )
         options = []
         for value in values:
-            for key in value:
-                options.append( { 'text': value[key], 'value': key } )
+            options.append( { 'text': values.get(value), 'value': value } )
         newAction.update( { 'options': options } )
 
-    elif type == 'button':
+    elif type == 'Button':
         newAction.update( { 'type': 'button' } )
         newAction.update( { 'text': description } )
     

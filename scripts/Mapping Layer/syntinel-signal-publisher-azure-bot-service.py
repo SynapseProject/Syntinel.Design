@@ -132,15 +132,14 @@ def CreateSlackAction(action):
     type = action.get('type')
     values = action.get('values', {})
     defaultValue = action.get('defaultValue')
-    if type == 'choice':
+    if type == 'Choice':
         newAction.update( { 'type': 'select' } )
         options = []
         for value in values:
-            for key in value:
-                options.append( { 'text': value[key], 'value': key } )
+            options.append( { 'text': values[value], 'value': value } )
         newAction.update( { 'options': options } )
 
-    elif type == 'button':
+    elif type == 'Button':
         newAction.update( { 'type': 'button' } )
         newAction.update( { 'text': description } )
     
@@ -237,7 +236,7 @@ def CreateTeamsCard(signalId, cueId, cue):
     actions = cue.get('actions', {})
     for action in actions:
         type = action.get('type')
-        if type == "button":
+        if type == "Button":
             myAction = {
                 "type": "Action.Submit",
                 "id": "action",
@@ -248,7 +247,7 @@ def CreateTeamsCard(signalId, cueId, cue):
                 }
             }
             card.get('actions').append(myAction)
-        elif type == "choice":
+        elif type == "Choice":
             myAction = {
                 "type": "Action.ShowCard",
                 "title": action.get('name'),
@@ -279,12 +278,11 @@ def CreateTeamsCard(signalId, cueId, cue):
                 ]
             }
             
-            for choice in action.get('values', []):
-                for kvp in choice:
-                    myChoice = {
-                        "title": choice.get(kvp),
-                        "value": kvp
-                    }
+            for choice in action.get('values', {}):
+                myChoice = {
+                    "title": action.get('values').get(choice),
+                    "value": choice
+                }
                 myBody.get('items')[0].get('choices').append(myChoice)
 
             myAction.get('card').get('body').append(myBody)

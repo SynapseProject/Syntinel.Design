@@ -1,31 +1,31 @@
 {
-    "StatusCode": "SuccessWithErrors",
-    "Id": "01N4T6NOR",
-    "Time": "2019-02-13T14:57:12",
-    "Results": [
+    "statusCode": "SuccessWithErrors",
+    "id": "01N4T6NOR",
+    "time": "2019-02-13T14:57:12",
+    "results": [
        {
-          "Code": "Success",
-          "Channel": "general",
-          "Type": "slack",
-          "Message": "Signal Sent"
+          "code": "Success",
+          "channel": "general",
+          "type": "slack",
+          "message": "Signal Sent"
        },
        {
-          "Code": "Success",
-          "Channel": "capacity_optimisation",
-          "Type": "slack",
-          "Message": "Signal Sent"
+          "code": "Success",
+          "channel": "capacity_optimisation",
+          "type": "slack",
+          "message": "Signal Sent"
        },
        {
-          "Code": "Failure",
-          "Channel": "western-union",
-          "Type": "telegram",
-          "Message": "An error occurred (ResourceNotFoundException) when calling the Invoke operation: Function not found: arn:aws:lambda:us-east-1:121808128646:function:syntinel-signal-publisher-telegram"
+          "code": "Failure",
+          "channel": "western-union",
+          "type": "telegram",
+          "message": "An error occurred (ResourceNotFoundException) when calling the Invoke operation: Function not found: arn:aws:lambda:us-east-1:121808128646:function:syntinel-signal-publisher-telegram"
        },
        {
-          "Code": "Success",
-          "Channel": "syntinel",
-          "Type": "azure-bot-service",
-          "Message": "Signal Sent"
+          "code": "Success",
+          "channel": "syntinel",
+          "type": "azure-bot-service",
+          "message": "Signal Sent"
        }
     ]
  }
