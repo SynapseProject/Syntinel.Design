@@ -1,38 +1,12 @@
 {
-    "Id": "000000000",
-    "CueId": "ec2",
-    "Variables": [
-        {
- 	        "Name": "action",
- 	        "Values": [
-                "stop"
-	        ]
-        },
-        {
-            "Name": "delay",
-            "Values": [
-                "0"
-            ]
-        },
-        {
-            "Name": "comments",
-            "Values": [
-                "I have nothing to say."
-            ]
-        },
-        {
-            "Name": "notify",
-            "Values": [
-                "gbelson@hooli.com"
-            ]
-        },
-        {
-            "Name": "day-of-the-week",
-            "Values": [
-                "monday",
-                "wednesday",
-                "friday"
-            ]
-        }
-	]
-}
+    "id": "000000000",
+    "cueId": "ec2",
+    "variables": [
+       {
+          "name": "action",
+          "values": [
+             "stop"
+          ]
+       }
+    ]
+ }
