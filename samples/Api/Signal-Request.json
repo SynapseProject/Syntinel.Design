@@ -2,7 +2,7 @@
     "reporterId": "000000000",
     "name": "Utilization",
     "description": "EC2 Utilization Montior",
-    "maxReplies": 1,
+    "maxReplies": 1000,
     "cues":
     {
         "ec2": {
@@ -18,7 +18,7 @@
                 {
                     "name": "Perform Action",
                     "description": "Indicates action to take against EC2 instances.",
-                    "type": "Choice",
+                    "type": "choice",
                     "values": {
                         "stop": "Stop Instance",
                         "terminate": "Terminate Instance",
@@ -29,14 +29,14 @@
                 },
                 {
                     "name": "Ignore Alert",
-                    "description": "Ingore this alert.",
-                    "type": "Button",
+                    "description": "Ignore this alert.",
+                    "type": "button",
                     "defaultValue": "ignore"            
                 },
                 {
                     "name": "Disable Alert",
                     "description": "Disable this alert.",
-                    "type": "Button",
+                    "type": "button",
                     "defaultValue": "disable"              
                 }
             ],

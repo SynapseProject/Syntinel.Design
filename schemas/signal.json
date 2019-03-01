@@ -58,12 +58,9 @@
                                 "defaultValue": { "type": "string" },
                                 "allowMultipleValues": { "type": "boolean" },
                                 "values": { 
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "additionalProperties": {
-                                            "type": "string"
-                                        }
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
                                     }
                                 }
                             }

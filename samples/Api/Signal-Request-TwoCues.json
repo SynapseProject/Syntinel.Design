@@ -1,0 +1,84 @@
+{
+    "reporterId": "000000000",
+    "name": "Utilization",
+    "description": "EC2 Utilization Montior",
+    "maxReplies": 1,
+    "cues":
+    {
+        "ec2": {
+            "name": "EC2 Usage",
+            "description": "Server [MySimpleLinuxServer] has been running for 7 days.  Would you like to take action against it?",
+            "resolver": {
+                "name": "ec2utils",
+                "config": {
+                    "instances": ["i-009cffa33db569230"]
+                }
+            },
+            "actions": [
+                {
+                    "name": "Perform Action",
+                    "description": "Indicates action to take against EC2 instances.",
+                    "type": "Choice",
+                    "values": {
+                        "stop": "Stop Instance",
+                        "terminate": "Terminate Instance",
+                        "reboot": "Reboot Instance",
+                        "hibernate": "Stop and Hibernate Instance"
+                    },
+                    "defaultValue": "stop"
+                },
+                {
+                    "name": "Ignore Alert",
+                    "description": "Ignore this alert.",
+                    "type": "Button",
+                    "defaultValue": "ignore"            
+                },
+                {
+                    "name": "Disable Alert",
+                    "description": "Disable this alert.",
+                    "type": "Button",
+                    "defaultValue": "disable"              
+                }
+            ],
+            "defaultAction": "Perform Action"
+        },
+        "cue2": {
+            "name": "EC2 Usage",
+            "description": "Server [MySimpleLinuxServer] has been running for 7 days.  Would you like to take action against it?",
+            "resolver": {
+                "name": "ec2utils",
+                "config": {
+                    "instances": ["i-009cffa33db569230"]
+                }
+            },
+            "actions": [
+                {
+                    "name": "Perform Action (2)",
+                    "description": "Indicates action to take against EC2 instances.",
+                    "type": "Choice",
+                    "values": {
+                        "stop": "Stop Instance (2)",
+                        "terminate": "Terminate Instance (2)",
+                        "reboot": "Reboot Instance (2)",
+                        "hibernate": "Stop and Hibernate Instance (2)"
+                    },
+                    "defaultValue": "stop"
+                },
+                {
+                    "name": "Ignore Alert (2)",
+                    "description": "Ignore this alert.",
+                    "type": "Button",
+                    "defaultValue": "ignore"            
+                },
+                {
+                    "name": "Disable Alert (2)",
+                    "description": "Disable this alert.",
+                    "type": "Button",
+                    "defaultValue": "disable"              
+                }
+            ],
+            "defaultAction": "Perform Action"
+        }    },
+    "defaultCue": "ec2",
+    "defaultCueTimeout": 4320
+}

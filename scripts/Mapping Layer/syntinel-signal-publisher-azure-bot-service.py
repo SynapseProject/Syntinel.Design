@@ -49,7 +49,7 @@ def sendMessage(conversationId, token, body):
         "Content-Type": "application/json",
         "Authorization": "Bearer " + token
     }
-
+    
     msgResponse = requests.post(url, headers=headers, data=json.dumps(body))
     if (msgResponse.ok) :
         status = msgResponse.status_code
@@ -132,14 +132,14 @@ def CreateSlackAction(action):
     type = action.get('type')
     values = action.get('values', {})
     defaultValue = action.get('defaultValue')
-    if type == 'Choice':
+    if type == 'choice':
         newAction.update( { 'type': 'select' } )
         options = []
         for value in values:
             options.append( { 'text': values[value], 'value': value } )
         newAction.update( { 'options': options } )
 
-    elif type == 'Button':
+    elif type == 'button':
         newAction.update( { 'type': 'button' } )
         newAction.update( { 'text': description } )
     
@@ -236,7 +236,7 @@ def CreateTeamsCard(signalId, cueId, cue):
     actions = cue.get('actions', {})
     for action in actions:
         type = action.get('type')
-        if type == "Button":
+        if type == "button":
             myAction = {
                 "type": "Action.Submit",
                 "id": "action",
@@ -247,7 +247,7 @@ def CreateTeamsCard(signalId, cueId, cue):
                 }
             }
             card.get('actions').append(myAction)
-        elif type == "Choice":
+        elif type == "choice":
             myAction = {
                 "type": "Action.ShowCard",
                 "title": action.get('name'),
