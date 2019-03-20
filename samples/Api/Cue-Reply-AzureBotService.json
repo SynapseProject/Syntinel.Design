@@ -1,0 +1,97 @@
+{
+    "Payload": {
+      "type": "interactive_message",
+      "actions": [
+        {
+          "name": "Perform Action",
+          "type": "select",
+          "selected_options": [
+            {
+              "value": "stop"
+            }
+          ]
+        }
+      ],
+      "callback_id": "000000000|ec2 &amp; Spaces",
+      "team": {
+        "id": "TEH9KHQG6",
+        "domain": "syntinelworkspace"
+      },
+      "channel": {
+        "id": "CEFQ65B5H",
+        "name": "syntinel"
+      },
+      "user": {
+        "id": "UEMQZ60FR",
+        "name": "guy.waguespack"
+      },
+      "action_ts": "1548098230.307160",
+      "message_ts": "1548098222.009300",
+      "attachment_id": "1",
+      "token": "CC8W9BiaPrBjsxV8hShW9zIv",
+      "is_app_unfurl": false,
+      "original_message": {
+        "type": "message",
+        "subtype": "bot_message",
+        "text": "Utilization : EC2 Utilization Montior",
+        "ts": "1548098222.009300",
+        "username": "SyntinelBot",
+        "bot_id": "BEF9N1X1P",
+        "attachments": [
+          {
+            "callback_id": "012IWCSU0|ec2 &amp; Spaces",
+            "text": "EC2 Resize : Server [MySimpleLinuxServer] has been running for 7 days.  Would you like to take action against it?",
+            "id": 1,
+            "color": "2eb886",
+            "actions": [
+              {
+                "id": "1",
+                "name": "Perform Action",
+                "text": "",
+                "type": "select",
+                "data_source": "static",
+                "options": [
+                  {
+                    "text": "Stop Instance",
+                    "value": "stop"
+                  },
+                  {
+                    "text": "Terminate Instance",
+                    "value": "terminate"
+                  },
+                  {
+                    "text": "Reboot Instance",
+                    "value": "reboot"
+                  },
+                  {
+                    "text": "Stop and Hibernate Instance",
+                    "value": "hibernate"
+                  }
+                ]
+              },
+              {
+                "id": "2",
+                "name": "Ignore Alert",
+                "text": "Ingore this alert.",
+                "type": "button",
+                "value": "ignore",
+                "style": "default"
+              },
+              {
+                "id": "3",
+                "name": "Disable Alert",
+                "text": "Disable this alert.",
+                "type": "button",
+                "value": "disable",
+                "style": "default"
+              }
+            ],
+            "fallback": "EC2 Resize : Server [MySimpleLinuxServer] has been running for 7 days.  Would you like to take action against it?"
+          }
+        ]
+      },
+      "response_url": "https://hooks.slack.com/actions/TEH9KHQG6/529411431013/M4OoNPYpvvBtxKq8SGArJzAO",
+      "trigger_id": "528475340080.493325602550.36686c40058d8fdc5403ab8ac4f0f908"
+    },
+    "ApiToken": "xoxb-493325602550-491763552164-NRNMRIs4So5OguhyUOBcWKWL"
+  }

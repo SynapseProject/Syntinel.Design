@@ -1,0 +1,18 @@
+{
+    "id": "041YRYC6O",
+    "actionId": "CUE_041YV3X1S",
+    "cueId": "ec2",
+    "variables": [
+      {
+        "name": "action",
+        "values": [
+          "stop"
+        ]
+      }
+    ],
+    "config": {
+      "instances": [
+        "i-009cffa33db569230"
+      ]
+    }
+  }
