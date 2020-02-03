@@ -1,13 +1,13 @@
-<mxfile modified="2020-02-03T21:51:21.772Z" host="www.draw.io" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" etag="zMKa6DQoTisFNsOjKzPV" version="12.6.4" type="github">
+<mxfile modified="2020-02-03T21:52:37.927Z" host="www.draw.io" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" etag="O8J828TQGKPGwyptI-Up" version="12.6.4" type="github">
   <diagram id="222e1999-71a5-0e0b-9e1c-3837c7d2da02" name="Relay Tier">
-    <mxGraphModel dx="989" dy="505" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="989" dy="456" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
         <mxCell id="37" value="&lt;b&gt;Syntinel Core&lt;/b&gt;&lt;br&gt;AWS Services that receive, log, broker and resolve messages." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=bottom;" parent="1" vertex="1">
           <mxGeometry x="130" y="60" width="770" height="760" as="geometry"/>
         </mxCell>
-        <mxCell id="h3eBN5jXIzi2TajNPJDc-56" value="&lt;b&gt;Subscribers&lt;/b&gt;&lt;br&gt;Lambda functions that can know how to map&amp;nbsp;&lt;br&gt;Syntinel objects to channel types and back." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#999900;verticalAlign=bottom;" parent="1" vertex="1">
+        <mxCell id="h3eBN5jXIzi2TajNPJDc-56" value="&lt;b&gt;Channels&lt;/b&gt;&lt;br&gt;Lambda functions that can know how to map&amp;nbsp;&lt;br&gt;Syntinel objects to channel types and back." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#999900;verticalAlign=bottom;" parent="1" vertex="1">
           <mxGeometry x="560" y="60" width="340" height="600" as="geometry"/>
         </mxCell>
         <mxCell id="h3eBN5jXIzi2TajNPJDc-62" value="&lt;b&gt;Supported Channel Types&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#CCCC00;verticalAlign=bottom;" parent="1" vertex="1">
