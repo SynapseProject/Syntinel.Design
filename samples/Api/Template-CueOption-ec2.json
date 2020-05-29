@@ -1,0 +1,23 @@
+{
+  "_id": "MyId",
+  "_type": "MyIdType",
+  "parameters": {
+    "instance": [
+      { "path": "description", "replace": "INSTANCE_ID" },
+      { "path": "resolver.config.instances[0]"}
+    ]
+  },
+  "template": {
+    "defaultAction": "Ignore Alert",
+    "description": "Server [INSTANCE_ID] has been running for 7 days.  Would you like to take action against it?",
+    "name": "EC2 Active",
+    "resolver": {
+      "config": {
+        "instances": [
+        	null
+        ]
+      },
+      "name": "ec2-setstate"
+    }
+  }
+}

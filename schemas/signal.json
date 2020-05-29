@@ -11,9 +11,12 @@
             "type": "object",
             "additionalProperties": {
                 "type": "object",
-                "required": [ "name", "description", "resolver" ],
                 "properties": {
                     "name": { "type": "string" },
+                    "template": { "type": "string" },
+                    "arguments": {
+                        "type": "object"
+                    },
                     "description": { "type": "string" },
                     "resolver": {
                         "type": "object",
