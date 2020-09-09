@@ -1,6 +1,6 @@
-<mxfile modified="2020-09-09T15:50:13.309Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36" etag="fZqvVTNxUkQPigs9Q1m4" version="13.6.9" type="github">
+<mxfile modified="2020-09-09T15:51:41.800Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36" etag="rqhZprGTlZTnR3nyQqg5" version="13.6.9" type="github">
   <diagram id="222e1999-71a5-0e0b-9e1c-3837c7d2da02" name="Relay Tier">
-    <mxGraphModel dx="990" dy="543" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="990" dy="494" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -225,8 +225,8 @@
         </mxCell>
         <mxCell id="Y_TupKAwdbb3aOkOoUc_-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;jettySize=auto;orthogonalLoop=1;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="624" y="473.5" as="sourcePoint" />
-            <mxPoint x="536.5" y="473.5" as="targetPoint" />
+            <mxPoint x="614" y="473.5" as="sourcePoint" />
+            <mxPoint x="526.5" y="473.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Y_TupKAwdbb3aOkOoUc_-60" value="Status Notification&lt;br&gt;To Original&lt;br&gt;Channels" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
