@@ -1,4 +1,4 @@
-<mxfile modified="2020-09-14T18:21:47.779Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="n90BHq5ibszcj_eq4uuc" version="13.6.9" type="github">
+<mxfile modified="2020-09-14T18:26:16.346Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="nZb8VJkLqwKDbQVzLvCM" version="13.6.9" type="github">
   <diagram id="222e1999-71a5-0e0b-9e1c-3837c7d2da02" name="Relay Tier">
     <mxGraphModel dx="1223" dy="682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
@@ -162,8 +162,8 @@
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="690" y="130" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="440" y="464" />
-              <mxPoint x="440" y="330" />
+              <mxPoint x="420" y="464" />
+              <mxPoint x="420" y="330" />
               <mxPoint x="550" y="330" />
               <mxPoint x="550" y="127" />
             </Array>
@@ -205,8 +205,8 @@
             <mxPoint x="526.5" y="473.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Y_TupKAwdbb3aOkOoUc_-60" value="Status Notification&lt;br&gt;To Original&lt;br&gt;Channels" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="443.25" y="316.75" width="106.75" height="38.5" as="geometry" />
+        <mxCell id="Y_TupKAwdbb3aOkOoUc_-60" value="Status Notification To&lt;br&gt;Original Channels" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="428" y="310.5" width="121.62" height="38.5" as="geometry" />
         </mxCell>
         <mxCell id="eQHoO0I1sAO4lnQkATsk-59" value="" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.ec2;fillColor=#F58534;gradientColor=none;" vertex="1" parent="1">
           <mxGeometry x="197.5" y="570" width="20" height="20" as="geometry" />
