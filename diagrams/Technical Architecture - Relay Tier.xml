@@ -1,11 +1,11 @@
-<mxfile modified="2020-09-14T18:19:31.595Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="I2fSSTEOk1L2tTV8D_Cc" version="13.6.9" type="github">
+<mxfile modified="2020-09-14T18:20:56.968Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="ZfmzF-LlGjpz_4elmmdR" version="13.6.9" type="github">
   <diagram id="222e1999-71a5-0e0b-9e1c-3837c7d2da02" name="Relay Tier">
     <mxGraphModel dx="1223" dy="682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="37" value="&lt;b&gt;Syntinel Core&lt;/b&gt;&lt;br&gt;AWS Services that receive, log, broker and resolve messages." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;verticalAlign=bottom;" parent="1" vertex="1">
-          <mxGeometry x="130" y="60" width="770" height="760" as="geometry" />
+          <mxGeometry x="130" y="60" width="770" height="700" as="geometry" />
         </mxCell>
         <mxCell id="h3eBN5jXIzi2TajNPJDc-56" value="&lt;b&gt;Channels&lt;/b&gt;&lt;br&gt;Functions that can know how to map&amp;nbsp;&lt;br&gt;Syntinel objects to channel types and back." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#999900;verticalAlign=bottom;" parent="1" vertex="1">
           <mxGeometry x="560" y="60" width="340" height="600" as="geometry" />
@@ -16,13 +16,13 @@
         <mxCell id="eQHoO0I1sAO4lnQkATsk-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.35;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="DazhFdRmCA850l7QKZzB-86" target="Oe_aaYZdlDnrvN6lTsQu-66">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="110" y="675" />
+              <mxPoint x="110" y="640" />
               <mxPoint x="110" y="464" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="DazhFdRmCA850l7QKZzB-86" value="&lt;b&gt;Resolvers&lt;/b&gt;&lt;br&gt;Functions that resolve signal messages." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=bottom;arcSize=17;" parent="1" vertex="1">
-          <mxGeometry x="150" y="560" width="310" height="230" as="geometry" />
+          <mxGeometry x="150" y="560" width="310" height="160" as="geometry" />
         </mxCell>
         <mxCell id="qePt231gWI_Q5qoE-xq--92" value="&lt;b&gt;Map Channel Specific Reply To&lt;br&gt;Syntinel Cue&lt;/b&gt;&lt;br&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#CCCC00;verticalAlign=bottom;" parent="1" vertex="1">
           <mxGeometry x="570" y="410" width="322" height="180" as="geometry" />
@@ -92,7 +92,7 @@
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="550" y="491" />
-              <mxPoint x="550" y="675" />
+              <mxPoint x="550" y="640" />
             </Array>
           </mxGeometry>
         </mxCell>
