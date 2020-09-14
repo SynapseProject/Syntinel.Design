@@ -1,4 +1,4 @@
-<mxfile modified="2020-09-14T18:20:56.968Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="ZfmzF-LlGjpz_4elmmdR" version="13.6.9" type="github">
+<mxfile modified="2020-09-14T18:21:47.779Z" host="app.diagrams.net" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36" etag="n90BHq5ibszcj_eq4uuc" version="13.6.9" type="github">
   <diagram id="222e1999-71a5-0e0b-9e1c-3837c7d2da02" name="Relay Tier">
     <mxGraphModel dx="1223" dy="682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
@@ -130,9 +130,7 @@
         <mxCell id="b4fcRjHGLG0HaX6ezsnS-94" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.35;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;jettySize=auto;orthogonalLoop=1;" parent="1" source="b4fcRjHGLG0HaX6ezsnS-90" target="2" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="99" y="200" />
-              <mxPoint x="120" y="200" />
-              <mxPoint x="120" y="127" />
+              <mxPoint x="99" y="127" />
             </Array>
           </mxGeometry>
         </mxCell>
